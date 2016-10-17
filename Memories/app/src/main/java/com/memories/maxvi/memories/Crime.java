@@ -1,21 +1,26 @@
 package com.memories.maxvi.memories;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 
 public class Crime {
     private UUID mId;
     private String mTitle;
-    private Date mDate;
+    private String mDate;
     private boolean mSolved;
 
-    public Date getDate() {
-        mDate = new Date();
+    public String getDate() {
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH);
+        mDate = dateFormat.format(new Date());
+        DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH);
+        mDate += " " + timeFormat.format(new Date());
         return mDate;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         mDate = date;
     }
 

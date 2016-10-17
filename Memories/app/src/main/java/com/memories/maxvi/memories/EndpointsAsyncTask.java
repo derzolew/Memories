@@ -15,13 +15,14 @@ import java.io.IOException;
 class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    //public static final String BACKEND_URL = "https://crimes-maxvi.appspot.com/_ah/api/";
 
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
         if(myApiService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-                    .setRootUrl("https://crimes-maxvi.appspot.com/_ah/api/")
+                    .setRootUrl(BuildConfig.BACKEND_URL)
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
