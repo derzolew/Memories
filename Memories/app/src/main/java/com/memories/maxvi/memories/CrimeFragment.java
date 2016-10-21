@@ -1,6 +1,7 @@
 package com.memories.maxvi.memories;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,18 +14,25 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.memories.maxvi.memories.threadManager.CoolAsyncTask;
+import com.memories.maxvi.memories.threadManager.IResultCallback;
+import com.memories.maxvi.memories.threadManager.operation.TestOperation;
 
 public class CrimeFragment extends Fragment {
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private CoolAsyncTask mTask;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCrime = new Crime();
-
+        setRetainInstance(true);
     }
 
     @Nullable
@@ -63,6 +71,28 @@ public class CrimeFragment extends Fragment {
         });
 
 
+        if (mTask == null) {
+            mTask = new CoolAsyncTask();
+            mTask.linkActivity(getActivity());
+            mTask.execute(new TestOperation(), "doing stuff", new IResultCallback<TestOperation.Result, Integer>() {
+                @Override
+                public void onSuccess(TestOperation.Result result) {
+                    Toast.makeText(getActivity(), result.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(Exception exception) {
+                    Toast.makeText(getActivity(), "error " + exception, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onProgressChanged(Integer integer, Activity activity) {
+                    Toast.makeText(activity, "progress " + integer, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            mTask.linkActivity(getActivity());
+        }
 
         return v;
     }
