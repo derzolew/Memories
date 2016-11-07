@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 
-public class Crime {
+public class Memory {
     private UUID mId;
     private String mTitle;
     private String mDate;
@@ -32,7 +32,7 @@ public class Crime {
         mSolved = solved;
     }
 
-    public Crime() {
+    public Memory() {
         mId = UUID.randomUUID();
     }
 

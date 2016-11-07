@@ -4,7 +4,7 @@
    https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloEndpoints
 */
 
-package com.memories.maxvi.crimes.backend;
+package com.example.maxvi.myapplication.backend;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -19,8 +19,8 @@ import javax.inject.Named;
         name = "myApi",
         version = "v1",
         namespace = @ApiNamespace(
-                ownerDomain = "backend.Crimes.maxvi.memories.com",
-                ownerName = "backend.Crimes.maxvi.memories.com",
+                ownerDomain = "backend.myapplication.maxvi.example.com",
+                ownerName = "backend.myapplication.maxvi.example.com",
                 packagePath = ""
         )
 )
@@ -32,8 +32,8 @@ public class MyEndpoint {
     @ApiMethod(name = "sayHi")
     public MyBean sayHi(@Named("name") String name) {
         MyBean response = new MyBean();
-       // response.setData("Hi, " + name);
-        response.setData("Hu" + name);
+        response.setData("Hi, " + name);
+
         return response;
     }
 

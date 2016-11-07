@@ -1,10 +1,10 @@
 package com.memories.maxvi.memories.threadManager;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.app.Activity;
 import android.os.Handler;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class CoolAsyncTask {

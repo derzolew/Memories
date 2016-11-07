@@ -27,7 +27,7 @@ public class TestOperation implements IOperation<String, Integer, TestOperation.
         Result result = new Result();
         result.n = N;
         result.result = "I did " + whatYouDoing + N + " sec ";
-        return  result;
+        return result;
     }
 
     public static class Result {

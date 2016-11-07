@@ -1,3 +1,4 @@
+/*
 package com.memories.maxvi.memories;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,12 +11,13 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.memories.maxvi.crimes.backend.myApi.MyApi;
 
+
 import java.io.IOException;
 
 class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
-    //public static final String BACKEND_URL = "https://crimes-maxvi.appspot.com/_ah/api/";
+    //public static final String BACKEND_URL = "https://Crimes-maxvi.appspot.com/_ah/api/";
 
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
@@ -48,3 +50,4 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
 }
+*/

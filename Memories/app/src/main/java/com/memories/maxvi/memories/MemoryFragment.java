@@ -1,7 +1,6 @@
 package com.memories.maxvi.memories;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,33 +13,44 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.memories.maxvi.memories.threadManager.CoolAsyncTask;
-import com.memories.maxvi.memories.threadManager.IResultCallback;
-import com.memories.maxvi.memories.threadManager.operation.TestOperation;
 
-public class CrimeFragment extends Fragment {
-    private Crime mCrime;
+import java.util.UUID;
+
+public class MemoryFragment extends Fragment {
+
+    public static final String ARG_MEMORY_ID = "com.memories.maxvi.memories.memory_id";
+    private Memory mMemory;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
     private CoolAsyncTask mTask;
 
+    public static MemoryFragment newInstance(UUID memoryId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MEMORY_ID, memoryId);
+
+        MemoryFragment fragment = new MemoryFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCrime = new Crime();
-        setRetainInstance(true);
+        UUID memoryId = (UUID) getActivity().getIntent().getSerializableExtra(ARG_MEMORY_ID);
+        mMemory = MemoryLab.get(getActivity()).getCrime(memoryId);
+        //setRetainInstance(true);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_crime, container, false);
+        View v = inflater.inflate(R.layout.fragment_memory, container, false);
 
-        mTitleField = (EditText) v.findViewById(R.id.crime_title);
+        mTitleField = (EditText) v.findViewById(R.id.memory_title);
+        mTitleField.setText(mMemory.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -49,7 +59,7 @@ public class CrimeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCrime.setTitle(s.toString());
+                mMemory.setTitle(s.toString());
             }
 
             @Override
@@ -58,20 +68,21 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mDateButton = (Button) v.findViewById(R.id.crime_date);
-        mDateButton.setText(mCrime.getDate());
+        mDateButton = (Button) v.findViewById(R.id.memory_date);
+        mDateButton.setText(mMemory.getDate());
         mDateButton.setEnabled(false);
 
-        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
+        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.memory_solved);
+        mSolvedCheckBox.setChecked(mMemory.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCrime.setSolved(isChecked);
+                mMemory.setSolved(isChecked);
             }
         });
 
 
-        if (mTask == null) {
+        /*if (mTask == null) {
             mTask = new CoolAsyncTask();
             mTask.linkActivity(getActivity());
             mTask.execute(new TestOperation(), "doing stuff", new IResultCallback<TestOperation.Result, Integer>() {
@@ -83,6 +94,7 @@ public class CrimeFragment extends Fragment {
                 @Override
                 public void onError(Exception exception) {
                     Toast.makeText(getActivity(), "error " + exception, Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override
@@ -93,7 +105,7 @@ public class CrimeFragment extends Fragment {
         } else {
             mTask.linkActivity(getActivity());
         }
-
+*/
         return v;
     }
 }
