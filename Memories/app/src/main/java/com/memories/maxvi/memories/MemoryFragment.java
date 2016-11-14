@@ -4,6 +4,7 @@ package com.memories.maxvi.memories;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,7 +21,10 @@ import java.util.UUID;
 
 public class MemoryFragment extends Fragment {
 
-    public static final String ARG_MEMORY_ID = "com.memories.maxvi.memories.memory_id";
+    private static final String ARG_MEMORY_ID = "com.memories.maxvi.memories.memory_id";
+    private static final String DIALOG_DATE = "DialogDate";
+    private static final int REQUEST_DATE = 0;
+
     private Memory mMemory;
     private EditText mTitleField;
     private Button mDateButton;
@@ -40,7 +44,7 @@ public class MemoryFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID memoryId = (UUID) getActivity().getIntent().getSerializableExtra(ARG_MEMORY_ID);
-        mMemory = MemoryLab.get(getActivity()).getCrime(memoryId);
+        mMemory = MemoryLab.get(getActivity()).getMemory(memoryId);
         //setRetainInstance(true);
     }
 
@@ -69,8 +73,16 @@ public class MemoryFragment extends Fragment {
         });
 
         mDateButton = (Button) v.findViewById(R.id.memory_date);
-        mDateButton.setText(mMemory.getDate());
-        mDateButton.setEnabled(false);
+        mDateButton.setText(mMemory.getDate().toString());
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mMemory.getDate());
+                dialog.setTargetFragment(MemoryFragment.this, REQUEST_DATE);
+                dialog.show(fragmentManager, DIALOG_DATE);
+            }
+        });
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.memory_solved);
         mSolvedCheckBox.setChecked(mMemory.isSolved());

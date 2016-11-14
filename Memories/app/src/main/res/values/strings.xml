@@ -6,4 +6,6 @@
     <string name="memory_solved_label">Solved</string>
     <string name="memory_title">Memory Title</string>
     <string name="memory_date">Memory date</string>
+    <string name="date_picker_title">Date of memory</string>
+    <string name="memory_image">Memory image</string>
 </resources>

@@ -31,7 +31,7 @@ public class MemoryLab {
         return mMemories;
     }
 
-    public Memory getCrime(UUID id) {
+    public Memory getMemory(UUID id) {
         for (Memory memory : mMemories) {
             if (memory.getId().equals(id)) {
                 return memory;

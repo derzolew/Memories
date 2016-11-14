@@ -9,18 +9,22 @@ import java.util.UUID;
 public class Memory {
     private UUID mId;
     private String mTitle;
-    private String mDate;
+    private Date mDate;
     private boolean mSolved;
 
-    public String getDate() {
+    /*public String getDate() {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH);
         mDate = dateFormat.format(new Date());
         DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH);
         mDate += " " + timeFormat.format(new Date());
         return mDate;
+    }*/
+
+    public Date getDate() {
+        return mDate;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         mDate = date;
     }
 
@@ -34,6 +38,7 @@ public class Memory {
 
     public Memory() {
         mId = UUID.randomUUID();
+        mDate = new Date();
     }
 
     public UUID getId() {

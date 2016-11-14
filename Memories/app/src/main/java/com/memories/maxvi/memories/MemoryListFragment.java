@@ -44,6 +44,7 @@ public class MemoryListFragment extends Fragment {
             mMemoryRecyclerView.setAdapter(mMemoryAdapter);
         }
         else {
+            //TODO reload exact list item
             mMemoryAdapter.notifyDataSetChanged();
         }
 
@@ -78,16 +79,16 @@ public class MemoryListFragment extends Fragment {
             mSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_memory_solved_check_box);
         }
 
-        public void bindMemory(Memory Memory) {
-            mMemory = Memory;
+        public void bindMemory(Memory memory) {
+            mMemory = memory;
             mTitleTextView.setText(mMemory.getTitle());
-            mDateTextView.setText(mMemory.getDate());
+            mDateTextView.setText(mMemory.getDate().toString());
             mSolvedCheckBox.setChecked(mMemory.isSolved());
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = MemoryActivity.newIntent(getActivity(), mMemory.getId());
+            Intent intent = MemoryPagerActivity.newIntent(getActivity(), mMemory.getId());
             startActivity(intent);
         }
     }
@@ -108,8 +109,8 @@ public class MemoryListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(MemoryHolder holder, int position) {
-            Memory Memory = mMemories.get(position);
-            holder.bindMemory(Memory);
+            Memory memory = mMemories.get(position);
+            holder.bindMemory(memory);
         }
 
         @Override
